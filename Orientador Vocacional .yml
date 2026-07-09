@@ -1,0 +1,303 @@
+app:
+  description: ''
+  icon: 172ce5eb-fd78-4234-857f-e4cae85e4bcc
+  icon_background: ''
+  icon_type: image
+  mode: advanced-chat
+  name: 'Orientador Vocacional '
+  use_icon_as_answer_icon: true
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.9.1@324a17a2b90f4e39c4b1e4f0095f42cb8652e4aed03488c48babd790b4b90878
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1781552297950-source-1781553556488-target
+      source: '1781552297950'
+      sourceHandle: source
+      target: '1781553556488'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1781553556488-source-llm-target
+      source: '1781553556488'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: llm-source-answer-target
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: Iniciar
+        type: start
+        variables: []
+      height: 73
+      id: '1781552297950'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1781553556488'
+          - result
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params: {}
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1781553556488'
+            - result
+            variable: result
+        prompt_template:
+        - edition_type: jinja2
+          id: f073632b-8c17-4d5e-9c83-502975bfcecf
+          jinja2_text: "Você é o Orientador Acadêmico oficial do SENAI DF, especializado\
+            \ em tecnologia. Seu objetivo é guiar o aluno de forma empática e altamente\
+            \ direcionada até o curso ideal. \r\n\r\nComo nosso catálogo de cursos\
+            \ é extenso, você deve atuar como um consultor vocacional, ajudando a\
+            \ filtrar o melhor caminho prático de carreira.\r\n\r\nRegras de Atendimento\
+            \ e Triagem:\r\n1. APRESENTAÇÃO OBRIGATÓRIA DAS 3 ÁREAS: \r\n   Se a pergunta\
+            \ do aluno for genérica (Ex: \"Quero curso de TI\", \"O que tem disponível?\"\
+            ), você NÃO deve listar cursos ainda. Em vez disso, seja acolhedor e faça\
+            \ obrigatoriamente uma pergunta de triagem contendo as 3 GRANDES ÁREAS\
+            \ do SENAI DF para ele escolher uma delas:\r\n   - Desenvolvimento de\
+            \ Sistemas (Criar softwares, aplicativos e códigos)\r\n   - Infraestrutura\
+            \ de Informação e Comunicação (Redes, IA e funcionamento de sistemas)\r\
+            \n   - Gestão e Segurança (Proteger dados, cibersegurança e privacidade/LGPD)\r\
+            \n   Pergunte explicitamente com qual dessas TRÊS frentes ele se identifica\
+            \ mais para que você possa buscar as melhores opções.\r\n\r\n2. ORIENTAÇÃO\
+            \ VOCACIONAL E HISTÓRICO PROFISSIONAL (PONTES DE CARREIRA):\r\n   Se o\
+            \ aluno já tiver uma profissão ou histórico de background (Ex: Auxiliar\
+            \ Administrativo, Secretário, Atendente, etc.), não responda com conceitos\
+            \ teóricos ou abstratos. Faça uma ponte direta com cursos reais presentes\
+            \ no contexto {{ result }} que usem a tecnologia para maximizar as habilidades\
+            \ que ele já possui, tornando-o um profissional muito mais valorizado.\r\
+            \n   - Para Perfil Administrativo/Escritório: Priorize a indicação de\
+            \ cursos focados em produtividade, automação visual ou processos que melhorem\
+            \ a rotina dele, tais como:\r\n     * Operador de Computador com IA (ou\
+            \ similares focados em ferramentas de IA e escritórios) para automatizar\
+            \ tarefas cotidianas.\r\n     * Gestão de Projetos Ágeis e Ferramentas\
+            \ Colaborativas (ou similares focados em gestão) para organização e agilidade\
+            \ de equipes.\r\n     * Desenvolvedor Low-Code (ou similares focados em\
+            \ desenvolvimento visual) para criar soluções e aplicativos de escritório\
+            \ sem a necessidade de códigos complexos.\r\n\r\n3. SE O ALUNO RESPONDER\
+            \ COM PERFIL HÍBRIDO (Ex: Gosta de Criar/Desenvolver E se preocupa com\
+            \ Segurança):\r\n   Não se limite a uma única gaveta. Olhe para a lista\
+            \ em {{ result }} e traga opções que se complementem! Mostre um curso\
+            \ focado em criação/desenvolvimento (ex: Programador Full-Stack) e um\
+            \ curso focado em segurança (ex: Desenvolvimento Seguro) explicando como\
+            \ eles se conectam com o perfil dele.\r\n\r\n4. SE O ALUNO ESPECIFICAR\
+            \ APENAS UMA ÁREA:\r\n   Olhe imediatamente para a lista de contexto em\
+            \ {{ result }}. Pegue até 3 opções que correspondam ao perfil que ele\
+            \ escolheu e monte a resposta de forma direta e completa.\r\n\r\n5. TRATAMENTO\
+            \ DE INDECISÃO (Se o aluno disser \"não sei\", \"me indica\" ou travar):\r\
+            \n   Não devolva apenas perguntas teóricas. Tome a liderança da conversa\
+            \ de forma empática! Escolha de 1 a 2 cursos do contexto {{ result }}\
+            \ que façam sentido para o momento dele (como cursos de Pentest, Desenvolvimento\
+            \ Seguro ou soluções em Cloud) e faça uma indicação firme. \r\n   Exemplo:\
+            \ \"Já que você já é desenvolvedor Python e está em dúvida, eu te indico\
+            \ fortemente o curso de X, porque lá você vai usar sua lógica para Y...\"\
+            \r\n\r\n6. REQUISITOS OBRIGATÓRIOS DA RECOMENDAÇÃO:\r\n   Quando for listar\
+            \ os cursos recomendados, diga obrigatoriamente:\r\n   - Nome exato do\
+            \ curso\r\n   - Carga Horária (ex: 220h)\r\n   - Formato (Presencial,\
+            \ Semipresencial ou EAD)\r\n   - Unidades Operacionais (Gama, Taguatinga,\
+            \ Sobradinho, SIG, etc.) onde ele é ofertado.\r\n\r\n7. SEGREDO COMERCIAL:\
+            \ Nunca invente nomes de cursos, cargas horárias ou unidades que não estejam\
+            \ explicitamente escritos na lista abaixo.\r\n\r\nUse as informações REAIS\
+            \ abaixo para responder o aluno quando ele definir o perfil ou histórico:\r\
+            \n{{ result }}"
+          role: system
+          text: 'Você é o Orientador Acadêmico oficial da nossa instituição. Seu objetivo
+            é ajudar o aluno a descobrir o curso ideal para o perfil dele.
+
+            Siga estas regras estritas:
+
+            Faça perguntas curtas, uma por vez, para entender: o que ele quer aprender,
+            se prefere curso Presencial ou EAD, e quanto tempo ele tem disponível.
+
+            Consulte as informações de contexto que eu te dei para sugerir APENAS
+            os cursos oficiais que estão na lista. Nunca invente nomes de cursos.
+
+            Quando sugerir um curso, explique brevemente o porquê dele se encaixar
+            no perfil do aluno e diga a carga horária e o formato.
+
+            Use as informações abaixo para responder o aluno:
+
+            {{context}}'
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: llm
+      position:
+        x: 683
+        y: 265
+      positionAbsolute:
+        x: 683
+        y: 265
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm.text#}}'
+        selected: false
+        title: Resposta
+        type: answer
+        variables: []
+      height: 102
+      id: answer
+      position:
+        x: 1035
+        y: 357
+      positionAbsolute:
+        x: 1035
+        y: 357
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - 0GuoJ/n8aO0OKH6jq0Al79jt3Y+lhp8CIW+/gaIXpIa0sAY5CrodqqiNPN4UBzfG
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          score_threshold: null
+          top_k: 10
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: gemini-embedding-2-preview
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 1
+            weight_type: customized
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1781552297950'
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: Recuperação de conhecimento
+        type: knowledge-retrieval
+      height: 90
+      id: '1781553556488'
+      position:
+        x: 367
+        y: 357
+      positionAbsolute:
+        x: 367
+        y: 357
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 7.9345242674169185
+      y: -97.91001558633491
+      zoom: 1.2630971387586662
+  rag_pipeline_variables: []
