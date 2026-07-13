@@ -31,8 +31,7 @@ O projeto foi estruturado utilizando a seguinte lógica:
 3. **Prompt Engine / LLM:** O Gemini 2.5 Flash recebe o perfil do usuário + as descrições dos cursos encontrados na base de dados.
 4. **Output:** Apresentação formatada das melhores opções de cursos e orientações sobre os próximos passos.
 
-> 💡 *Dica: Se você tirou um print da tela do seu fluxo de blocos dentro do Dify, salve a imagem na pasta do projeto e adicione ela aqui usando a tag abaixo:*
-> ![Fluxo do Dify](caminho-da-sua-imagem.png)
+
 
 ---
 
